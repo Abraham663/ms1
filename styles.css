@@ -1,0 +1,542 @@
+/* Night Bordeaux -> Cherry Blossom professional palette */
+:root{
+    /* Named colors provided by user */
+    --night-bordeaux: #590d22; /* Night Bordeaux */
+    --dark-amaranth: #800f2f; /* Dark Amaranth */
+    --cherry-rose: #a4133c; /* Cherry Rose */
+    --rosewood: #c9184a; /* Rosewood */
+    --bubblegum-1: #ff4d6d; /* Bubblegum Pink */
+    --bubblegum-2: #ff758f; /* Bubblegum Pink (variant) */
+    --cotton-candy: #ff8fa3; /* Cotton Candy */
+    --cherry-blossom: #ffb3c1; /* Cherry Blossom */
+    --pastel-petal: #ffccd5; /* Pastel Petal */
+    --lavender-blush: #fff0f5; /* Lavender Blush fallback */
+
+    /* Semantic mappings used across the stylesheet */
+    --cb-page-bg: #fff6f7; /* very light warm page background */
+    --cb-accent: var(--cherry-rose); /* main accent (used for headers, CTAs) */
+    --cb-accent-2: var(--pastel-petal); /* soft accent / cards / secondary buttons */
+    --cb-accent-3: var(--rosewood); /* stronger accent for emphasis */
+    --cb-cta: var(--bubblegum-2); /* CTA / hover color */
+    --cb-cta-contrast: #ffffff;
+    --cb-text: #2f2226; /* deep neutral for legibility */
+    --cb-muted: #866971;
+    --cb-accent-rgb: 164,19,60; /* cherry-rose rgb approx */
+    --cb-accent-2-rgb: 255,204,213; /* pastel petal */
+    --card-bg: rgba(255,255,255,0.98);
+    /* Header and dinner specific mappings */
+    --header-bg: var(--night-bordeaux);
+    --header-rgb: 89,13,34;
+    --dinner-bg: var(--rosewood);
+    --dinner-rgb: 201,24,74;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--cb-page-bg);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--cb-text);
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Header with Logo - Professional */
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 32px;
+    background: linear-gradient(135deg, rgba(var(--header-rgb), 0.98) 0%, rgba(var(--header-rgb), 0.94) 100%);
+    backdrop-filter: blur(10px);
+    padding: 32px 28px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px rgba(var(--header-rgb), 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 50%);
+    pointer-events: none;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.header-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: white;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    flex-shrink: 0;
+    transition: transform .2s ease;
+}
+
+.header-logo:hover { transform: translateY(-2px); }
+
+.header-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.header-text { display: flex; flex-direction: column; gap: 4px; }
+
+.header-text h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.header-text p { 
+    font-size: 0.95rem; 
+    opacity: 0.90; 
+    margin: 0;
+    font-weight: 500;
+}
+
+.today-date { 
+    font-size: 0.88rem; 
+    margin-top: 8px; 
+    font-weight: 600; 
+    opacity: 0.85;
+    letter-spacing: 0.3px;
+}
+
+/* Search Card */
+.search-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(var(--cb-accent-rgb), 0.04);
+    margin-bottom: 22px;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.search-form { display: flex; gap: 10px; margin-bottom: 18px; }
+
+.search-form input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid var(--cb-accent);
+    border-radius: 10px;
+    font-size: 0.98rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+    background: rgba(255,255,255,0.98);
+}
+.search-form input:focus {
+    outline: none;
+    border-color: var(--cb-accent);
+    box-shadow: 0 0 0 6px rgba(var(--cb-accent-rgb),0.06);
+}
+
+.search-form button {
+    padding: 12px 26px;
+    background: var(--cb-accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 6px 18px rgba(var(--cb-accent-rgb),0.10);
+}
+.search-form button:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(var(--cb-accent-rgb),0.14); }
+.search-form button:active { transform: translateY(-1px); }
+
+.alert { padding: 12px 14px; border-radius: 8px; margin-bottom: 14px; }
+.alert-success { background-color: #EAF7EF; color: #165a3a; border: 1px solid #d5efe0; }
+.alert-error { background-color: #FDECEF; color: #7a2228; border: 1px solid #f5c6cb; }
+
+.student-details {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 36px rgba(var(--cb-accent-rgb), 0.04);
+    animation: slideIn .28s ease;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+@keyframes slideIn { from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+
+.student-header { background: var(--header-bg); color: white; padding: 22px; display:flex; gap:18px; align-items:flex-start; }
+.student-header.centered{ flex-direction:column; align-items:center; text-align:center; }
+
+.student-photo img { width:140px; height:140px; border-radius:12px; object-fit:cover; border:4px solid rgba(255,255,255,0.9); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+
+.student-basic-info{ flex:1; text-align:center; }
+.student-basic-info h2{ font-size:1.5rem; margin-bottom:8px; }
+.student-basic-info p{ margin:6px 0; opacity:0.95; }
+
+.student-body { padding: 20px 24px; text-align:center; }
+.info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+
+.info-card { background: rgba(255,255,255,0.96); padding:16px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.04); text-align:center; }
+.info-card h3 { color: var(--cb-accent); font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.info-card p { color: var(--cb-text); font-size:1rem; font-weight:500; }
+
+.food-preference{ display:inline-block; padding:8px 14px; border-radius:18px; font-weight:600; margin-top:8px; }
+.food-preference.veg{ background:#EAF7EF; color:#165a3a; }
+.food-preference.non-veg{ background:#FFF3F3; color:#7a2228; }
+
+.action-buttons{ display:flex; gap:10px; margin-top:16px; padding-top:12px; border-top:1px solid rgba(0,0,0,0.04); justify-content:center; }
+    .btn{ flex: none; padding:8px 12px; border:none; border-radius:8px; font-size:0.9rem; font-weight:600; cursor:pointer; text-decoration:none; text-align:center; box-shadow:0 6px 18px rgba(0,0,0,0.06); min-width:110px; }
+    /* Use dinner color for primary and secondary action buttons (View Meal History, New Search) */
+    .btn-primary{ background:var(--dinner-bg); color:white; }
+    .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(var(--dinner-rgb),0.18); }
+    .btn-secondary{ background:var(--dinner-bg); color:white; border:1px solid rgba(var(--dinner-rgb),0.12); }
+    .btn-secondary:hover{ background:var(--dinner-bg); color:white; transform:translateY(-3px); box-shadow:0 10px 28px rgba(var(--dinner-rgb),0.18); }
+
+.empty-state{ text-align:center; padding:48px 16px; color:var(--cb-accent); }
+.empty-state svg{ width:72px; height:72px; margin-bottom:14px; opacity:0.5; }
+
+/* Meal Section */
+.meal-section{ margin-top:20px; padding:18px; background: rgba(255,255,255,0.96); border-radius:12px; border:1px solid rgba(0,0,0,0.04); }
+.meal-section h3{ text-align:center; color:var(--cb-accent); margin-bottom:12px; font-size:0.98rem; text-transform:uppercase; letter-spacing:1px; }
+.meal-buttons{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+.meal-buttons form{ flex:1; min-width:120px; }
+    .btn-meal{ width:100%; padding:12px 10px; border:none; border-radius:10px; font-size:0.9rem; font-weight:600; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:6px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+    /* Make breakfast color apply to all meal buttons (breakfast, lunch, dinner) */
+    .btn-meal.breakfast,
+    .btn-meal.lunch,
+    .btn-meal.dinner {
+        background: var(--cb-accent-2);
+        color: var(--cb-text);
+    }
+    .btn-meal.breakfast:hover,
+    .btn-meal.lunch:hover,
+    .btn-meal.dinner:hover {
+        transform:translateY(-4px);
+        box-shadow:0 10px 28px rgba(var(--cb-accent-2-rgb),0.18);
+    }
+
+@media (max-width:768px){
+    .header-text h1{ font-size:1.3rem; }
+    .student-photo img{ width:120px; height:120px; }
+    .search-card{ padding:18px; }
+}
+
+@media (max-width:480px){
+    .search-form button{ padding:10px 14px; }
+}
+
+.btn-meal.dinner {
+    background: var(--cb-accent-2) !important;
+    color: var(--cb-text);
+}
+
+.btn-meal.dinner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(var(--cb-accent-2-rgb), 0.18);
+}
+
+.meal-time {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    display: block;
+    margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+
+/* Additional polish */
+.header { position: relative; overflow: visible; }
+
+.btn { transition: transform .18s ease, box-shadow .18s ease, opacity .15s ease; }
+.btn:active { transform: translateY(-1px) scale(0.995); }
+
+/* subtle focus rings for accessibility */
+a.btn:focus, button.btn:focus, .search-form input:focus { outline: none; box-shadow: 0 0 0 6px rgba(var(--cb-accent-rgb),0.06); }
+
+/* small responsive adjustment for header logo */
+.header-logo { border-radius: 10px; padding: 4px; }
+
+/* End additional polish */
+    .container {
+        max-width: 100%;
+    }
+
+    .header {
+        margin-bottom: 20px;
+        padding: 20px 15px;
+    }
+
+    .header-content {
+        gap: 15px;
+    }
+
+    .header-logo {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+    }
+
+    .header-text h1 {
+        font-size: 1.5rem;
+    }
+
+    .header-text p {
+        font-size: 0.85rem;
+    }
+
+    .search-card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .search-form input,
+    .search-form button {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+
+    .search-form button {
+        padding: 14px 20px;
+    }
+
+    .alert {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    .student-details {
+        border-radius: 15px;
+    }
+
+    .student-header {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .student-photo img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .student-basic-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .student-basic-info p {
+        font-size: 0.9rem;
+        margin: 6px 0;
+    }
+
+    .student-body {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .info-card {
+        padding: 15px;
+    }
+
+    .info-card h3 {
+        font-size: 0.8rem;
+    }
+
+    .info-card p {
+        font-size: 0.95rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .meal-buttons {
+        flex-direction: column;
+    }
+
+    .meal-buttons form {
+        width: 100%;
+    }
+
+    .btn-meal {
+        width: 100% !important;
+        padding: 14px 10px !important;
+    }
+
+    .meal-time {
+        font-size: 0.7rem;
+    }
+
+    .empty-state {
+        padding: 40px 15px;
+    }
+
+    .empty-state svg {
+        width: 60px;
+        height: 60px;
+    }
+
+    .empty-state p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+
+    .header {
+        margin-bottom: 15px;
+        padding: 15px 10px;
+    }
+
+    .header-content {
+        gap: 10px;
+    }
+
+    .header-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header-text h1 {
+        font-size: 1.2rem;
+    }
+
+    .header-text p {
+        font-size: 0.75rem;
+    }
+
+    .search-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .search-form input,
+    .search-form button {
+        font-size: 16px;
+        padding: 12px 12px;
+    }
+
+    .student-header {
+        padding: 15px;
+    }
+
+    .student-photo img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .student-basic-info h2 {
+        font-size: 1.1rem;
+    }
+
+    .student-basic-info p {
+        font-size: 0.8rem;
+        margin: 4px 0;
+    }
+
+    .student-body {
+        padding: 15px;
+    }
+
+    .info-card {
+        padding: 12px;
+    }
+
+    .info-card h3 {
+        font-size: 0.75rem;
+    }
+
+    .info-card p {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        gap: 6px;
+    }
+
+    .food-preference {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    .meal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-meal {
+        padding: 12px 8px !important;
+        font-size: 0.8rem;
+    }
+
+    .meal-section {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .meal-section h3 {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+
+    .empty-state {
+        padding: 30px 10px;
+    }
+
+    .empty-state svg {
+        width: 50px;
+        height: 50px;
+    }
+}
