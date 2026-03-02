@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS meal_records (
     student_id INT NOT NULL,
     account_number VARCHAR(50) NOT NULL,
     meal_type ENUM('breakfast','lunch','dinner') NOT NULL,
+    food_type VARCHAR(20) DEFAULT NULL,
+    meal_date DATE DEFAULT NULL,
     meal_time DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
@@ -37,6 +39,7 @@ CREATE TABLE IF NOT EXISTS staff (
     role VARCHAR(80) NOT NULL,
     phone VARCHAR(20),
     email VARCHAR(120),
+    food_preference ENUM('veg','non-veg') DEFAULT 'veg',
     joined_at DATE,
     active ENUM('yes','no') DEFAULT 'yes'
 );
@@ -55,27 +58,41 @@ CREATE TABLE IF NOT EXISTS feedback (
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE SET NULL
 );
 
+-- Staff Feedback Table: feedback specifically for staff members
+CREATE TABLE IF NOT EXISTS staff_feedback (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT NOT NULL,
+    account_number VARCHAR(50) NOT NULL,
+    quality TINYINT DEFAULT 0,
+    hygiene TINYINT DEFAULT 0,
+    service TINYINT DEFAULT 0,
+    staff_rating TINYINT DEFAULT 0,
+    comments TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+);
+
 -- Menu Table: daily/weekly menu entries
-CREATE TABLE IF NOT EXISTS menu (
+CREATE TABLE IF NOT EXISTS menus (
     id INT PRIMARY KEY AUTO_INCREMENT,
     menu_date DATE NOT NULL,
     meal_type ENUM('breakfast','lunch','dinner') NOT NULL,
-    title VARCHAR(200),
-    description TEXT,
+    food_type ENUM('veg','non-veg') NOT NULL,
+    items VARCHAR(255),
+    image VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY (menu_date, meal_type)
 );
 
 -- Meal Interest Table: students mark interested/not-interested for a menu item
-CREATE TABLE IF NOT EXISTS meal_interest (
+CREATE TABLE IF NOT EXISTS menu_interest (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT NOT NULL,
     account_number VARCHAR(50) NOT NULL,
-    menu_id INT NOT NULL,
-    interested ENUM('yes','no') NOT NULL DEFAULT 'no',
+    menu_date DATE NOT NULL,
+    meal_type ENUM('breakfast','lunch','dinner') NOT NULL,
+    interest ENUM('interested','not_interested') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
-    FOREIGN KEY (menu_id) REFERENCES menu(id) ON DELETE CASCADE
+    UNIQUE KEY (account_number, menu_date, meal_type)
 );
 
 -- Billing Table: record bills and payment status
@@ -89,3 +106,44 @@ CREATE TABLE IF NOT EXISTS billing (
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
 );
+
+
+
+CREATE TABLE IF NOT EXISTS menu (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    day ENUM('today','tomorrow') NOT NULL,
+    meal_type ENUM('veg','nonveg') NOT NULL,
+    menu_items VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS meal_feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_number VARCHAR(50) NOT NULL,
+    menu_id INT NOT NULL,
+    meal ENUM('breakfast','lunch','dinner'),
+    food_type ENUM('veg','nonveg'),
+    feedback ENUM('like','dislike') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_vote (account_number, meal)
+);
+
+-- Fix for existing databases: Add missing columns if they don't exist
+ALTER TABLE menus 
+ADD COLUMN IF NOT EXISTS food_type ENUM('veg','non-veg') NOT NULL AFTER meal_type,
+ADD COLUMN IF NOT EXISTS items VARCHAR(255) AFTER food_type,
+ADD COLUMN IF NOT EXISTS image VARCHAR(255) AFTER items;
+
+ALTER TABLE meal_feedback 
+ADD COLUMN IF NOT EXISTS meal ENUM('breakfast','lunch','dinner') AFTER menu_id,
+ADD COLUMN IF NOT EXISTS food_type ENUM('veg','nonveg') AFTER meal;
+
+ALTER TABLE meal_feedback 
+ADD UNIQUE KEY IF NOT EXISTS unique_vote (account_number, meal);
+
+-- Fix for existing databases: Add food_type column to meal_records if it doesn't exist
+ALTER TABLE meal_records 
+ADD COLUMN IF NOT EXISTS food_type VARCHAR(20) DEFAULT NULL AFTER meal_type;
+
+-- Fix for existing databases: Add meal_date column to meal_records if it doesn't exist
+ALTER TABLE meal_records 
+ADD COLUMN IF NOT EXISTS meal_date DATE DEFAULT NULL AFTER food_type;
